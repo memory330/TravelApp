@@ -3,7 +3,6 @@ if (rootProject.ext.isMouleDebugHome){
 } else {
     apply plugin: 'com.android.application'
 }
-apply plugin: 'me.tatarka.retrolambda'
 
 android {
 

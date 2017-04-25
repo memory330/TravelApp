@@ -16,10 +16,10 @@ public class HomeIntent {
     }
 
     public static void launchHome() {
-        ModuleBundle bundle=new ModuleBundle();
-        // bundle.put(IHomeProvider.HOME_TABTYPE,tabType);
+        // ModuleBundle bundle=new ModuleBundle();
+        // bundle.put(IHomeProvider.HOME_TABTYPE,type);
         ModuleRouter.newInstance(IHomeProvider.HOME_ACT_HOME)
-            .withBundle(bundle)
+            // .withBundle(bundle)
             .navigation();
     }
 

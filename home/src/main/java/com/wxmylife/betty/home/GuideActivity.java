@@ -4,13 +4,12 @@ import agency.tango.materialintroscreen.MaterialIntroActivity;
 import agency.tango.materialintroscreen.MessageButtonBehaviour;
 import agency.tango.materialintroscreen.SlideFragmentBuilder;
 import agency.tango.materialintroscreen.animations.IViewTranslation;
-import android.Manifest;
 import android.os.Bundle;
 import android.support.annotation.FloatRange;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.Toast;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.wxmylife.betty.base.modularization.module.home.HomeIntent;
 import com.wxmylife.betty.base.modularization.provider.IHomeProvider;
 
 /**
@@ -52,23 +51,23 @@ public class GuideActivity extends MaterialIntroActivity {
             .description("Go on")
             .build());
 
-        addSlide(new CustomSlide());
+        // addSlide(new CustomSlide());
 
-        addSlide(new SlideFragmentBuilder()
-                .backgroundColor(R.color.third_slide_background)
-                .buttonsColor(R.color.third_slide_buttons)
-                .possiblePermissions(new String[]{ Manifest.permission.CALL_PHONE, Manifest.permission.READ_SMS})
-                .neededPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
-                .image(R.drawable.img_equipment)
-                .title("We provide best tools")
-                .description("ever")
-                .build(),
-            new MessageButtonBehaviour(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showMessage("Try us!");
-                }
-            }, "Tools"));
+        // addSlide(new SlideFragmentBuilder()
+        //         .backgroundColor(R.color.third_slide_background)
+        //         .buttonsColor(R.color.third_slide_buttons)
+        //         .possiblePermissions(new String[]{ Manifest.permission.CALL_PHONE, Manifest.permission.READ_SMS})
+        //         .neededPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
+        //         .image(R.drawable.img_equipment)
+        //         .title("We provide best tools")
+        //         .description("ever")
+        //         .build(),
+        //     new MessageButtonBehaviour(new View.OnClickListener() {
+        //         @Override
+        //         public void onClick(View v) {
+        //             showMessage("Try us!");
+        //         }
+        //     }, "Tools"));
 
         addSlide(new SlideFragmentBuilder()
             .backgroundColor(R.color.fourth_slide_background)
@@ -81,6 +80,7 @@ public class GuideActivity extends MaterialIntroActivity {
     @Override
     public void onFinish() {
         super.onFinish();
-        Toast.makeText(this, "Try this library in your project! :)", Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, "Try this library in your project! :)", Toast.LENGTH_SHORT).show();
+        HomeIntent.launchHome();
     }
 }

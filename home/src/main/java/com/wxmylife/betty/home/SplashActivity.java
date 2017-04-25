@@ -3,8 +3,6 @@ package com.wxmylife.betty.home;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.wxmylife.betty.base.modularization.module.home.HomeIntent;
 import com.wxmylife.betty.base.modularization.provider.IHomeProvider;
@@ -18,8 +16,6 @@ import com.wxmylife.betty.base.utils.SystemUiVisibilityUtil;
 @Route(path = IHomeProvider.HOME_ACT_SPLASH)
 public class SplashActivity extends AppCompatActivity {
 
-    private Unbinder bind;
-
     private Handler mHandler;
 
 
@@ -28,7 +24,6 @@ public class SplashActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        bind = ButterKnife.bind(this);
         mHandler = new Handler(getMainLooper());
         SystemUiVisibilityUtil.hideStatusBar(getWindow(), true);
         setUpSplash();
@@ -36,6 +31,7 @@ public class SplashActivity extends AppCompatActivity {
 
 
     private void setUpSplash() {
+
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -55,10 +51,9 @@ public class SplashActivity extends AppCompatActivity {
 
         boolean isFirst = PreferenceUtil.getBoolean(ConstantUtil.KEY, false);
         if (isFirst) {
-            HomeIntent.launchHome();
-
-        } else {
             HomeIntent.launchGuide();
+        } else {
+            HomeIntent.launchHome();
         }
 
         SplashActivity.this.finish();
@@ -69,6 +64,5 @@ public class SplashActivity extends AppCompatActivity {
     protected void onDestroy() {
 
         super.onDestroy();
-        bind.unbind();
     }
 }
