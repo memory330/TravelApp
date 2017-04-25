@@ -3,6 +3,7 @@ if (rootProject.ext.isMouleDebugHome){
 } else {
     apply plugin: 'com.android.application'
 }
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
 
@@ -28,15 +29,27 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
     compile rootProject.ext.dependencies["supportv4"]
     compile rootProject.ext.dependencies["appcompatv7"]
     compile rootProject.ext.dependencies["recyclerviewv7"]
+    compile rootProject.ext.dependencies["butterknife"]
+    compile rootProject.ext.dependencies["supportdesign"]
     compile rootProject.ext.dependencies["bmob"]
+//    compile rootProject.ext.dependencies["rxlifecycle"]
+    compile rootProject.ext.dependencies["circleimageview"]
+//    compile 'agency.tango.android:material-intro-screen:0.0.5'
     compile rootProject.ext.dependencies["arouterapi"]
     annotationProcessor rootProject.ext.dependencies["aroutercompiler"]
 }
