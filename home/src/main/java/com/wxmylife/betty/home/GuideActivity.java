@@ -19,8 +19,11 @@ import com.nightonke.wowoviewpager.Animation.WoWoTextViewTextAnimation;
 import com.nightonke.wowoviewpager.Animation.WoWoTranslationAnimation;
 import com.nightonke.wowoviewpager.Enum.Ease;
 import com.nightonke.wowoviewpager.WoWoPathView;
+import com.wxmylife.betty.base.modularization.module.home.HomeIntent;
 import com.wxmylife.betty.base.modularization.provider.IHomeProvider;
+import com.wxmylife.betty.base.utils.ConstantUtil;
 import com.wxmylife.betty.base.utils.DisplayUtil;
+import com.wxmylife.betty.base.utils.PreferenceUtil;
 
 /**
  * Created by wxmylife on 2017/4/25.
@@ -44,7 +47,6 @@ public class GuideActivity extends BaseGuideActivity {
         super.onCreate(savedInstanceState);
         // getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        // HomeIntent.launchHome();
 
         r = (int)Math.sqrt(screenW * screenW + screenH * screenH) + 10;
 
@@ -83,7 +85,6 @@ public class GuideActivity extends BaseGuideActivity {
         addPlanetTargetAnimation();
         addLoginLayoutAnimation();
         addButtonAnimation();
-        addEditTextAnimation();
 
         wowo.ready();
 
@@ -230,13 +231,15 @@ public class GuideActivity extends BaseGuideActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) button.setZ(50);
         wowo.addAnimation(button)
             .add(WoWoAlphaAnimation.builder().page(2).from(0).to(1).build());
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                PreferenceUtil.put(ConstantUtil.KEY,false);
+                HomeIntent.launchHome();
+                GuideActivity.this.finish();
+            }
+        });
     }
 
-    private void addEditTextAnimation() {
-        // wowo.addAnimation(findViewById(R.id.username))
-        //     .add(WoWoAlphaAnimation.builder().page(2).from(0).to(1).build());
-        // wowo.addAnimation(findViewById(R.id.password))
-        //     .add(WoWoAlphaAnimation.builder().page(2).from(0).to(1).build());
-    }
+
 
 }

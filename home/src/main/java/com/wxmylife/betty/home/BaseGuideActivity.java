@@ -32,9 +32,9 @@ public abstract class BaseGuideActivity extends AppCompatActivity {
 
     protected Integer[] fragmentColorsRes() {
         return new Integer[]{
-            R.color.white,
-            R.color.white,
-            R.color.white,
+            R.color.splash_backgroud,
+            R.color.splash_backgroud,
+            R.color.splash_backgroud,
             R.color.white,
         };
     }

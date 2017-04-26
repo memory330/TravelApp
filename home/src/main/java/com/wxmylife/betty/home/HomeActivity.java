@@ -12,7 +12,6 @@ import com.wxmylife.betty.base.base.BaseActivity;
 import com.wxmylife.betty.base.modularization.provider.IHomeProvider;
 import com.wxmylife.betty.base.utils.ConstantUtil;
 import com.wxmylife.betty.base.utils.PreferenceUtil;
-import com.wxmylife.betty.base.utils.ToastUtil;
 
 /**
  * Created by wxmylife on 2017/4/25.
@@ -28,12 +27,12 @@ public class HomeActivity extends BaseActivity
 
 
     @Override public int getLayoutId() {
-        return R.layout.activity_main;
+        return R.layout.activity_home;
     }
 
 
     @Override public void initViews(Bundle savedInstanceState) {
-        // initViewsId();
+        initViewsId();
         //初始化Fragment
         // initFragments();
         //初始化侧滑菜单
@@ -89,13 +88,21 @@ public class HomeActivity extends BaseActivity
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            // if (_DrawerLayout.isDrawerOpen(_DrawerLayout.getChildAt(1))) {
-            //     _DrawerLayout.closeDrawers();
-            // } else {
-                exitApp();
-            // }
-
+            if (_DrawerLayout.isDrawerOpen(_DrawerLayout.getChildAt(1))) {
+                _DrawerLayout.closeDrawers();
+            } else {
+                // if (mHomePageFragment != null) {
+                //     if (mHomePageFragment.isOpenSearchView()) {
+                //         mHomePageFragment.closeSearchView();
+                //     } else {
+                //         exitApp();
+                //     }
+                // } else {
+                    exitApp();
+                // }
+            }
         }
+
         return true;
     }
 
@@ -106,7 +113,7 @@ public class HomeActivity extends BaseActivity
     private void exitApp() {
 
         if (System.currentTimeMillis() - exitTime > 2000) {
-            ToastUtil.ShortToast("再按一次退出");
+            // SnackbarUtil.showMessage(getr,"再按一次退出");
             exitTime = System.currentTimeMillis();
         } else {
             PreferenceUtil.remove(ConstantUtil.SWITCH_MODE_KEY);

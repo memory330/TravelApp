@@ -1,24 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-
+    android:layout_height="match_parent">
 
     <com.wxmylife.betty.base.view.splash.SplashView
-        android:id="@+id/wowSplash"
+        android:id="@+id/splash_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
+        app:removeFromParentOnEnd="true"
+        app:circleRadius="@dimen/splash_circle_radius"
+        app:rotationRadius="@dimen/splash_rotation_radius"
+        app:rotationDuration="@integer/splash_rotation_duration"
+        app:splashDuration="@integer/splash_duration"
+        app:splashBackgroundColor="@color/splash_bg"
+        app:circleColors="@array/splash_circle_colors" />
 
-    <com.wxmylife.betty.base.view.splash.WowView
-        android:id="@+id/wowView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        />
-
-</RelativeLayout>
+</FrameLayout>
