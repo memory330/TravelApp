@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#fb7299</color>
-    <color name="colorPrimaryDark">#b85671</color>
+    <color name="colorPrimary">#0DCEDA</color>
+    <color name="colorPrimaryDark">#6EF3D6</color>
+    <color name="cw">#C6FCE5</color>
+    <color name="c">#EBFFFA</color>
+    <color name="splash_backgroud">#5A92AF</color>
     <color name="colorAccent">@android:color/black</color>
     <color name="yellow_50">#FFD11B</color>
     <color name="yellow_30">#FEA501</color>

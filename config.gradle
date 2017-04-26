@@ -19,7 +19,7 @@ ext{
             butterknife    : 'com.jakewharton:butterknife:8.4.0',
 //            rxlifecycle    : 'com.trello:rxlifecycle-components:0.6.1',
             circleimageview    : 'de.hdodenhof:circleimageview:2.1.0',
-            intro: 'agency.tango.android:material-intro-screen:0.0.5',
+            wowoviewpager: 'com.nightonke:wowoviewpager:2.0.0',
     ]
 
     //home是否是作为模块，true的时候是，false的时候可以独立运行，不想改了ORZ

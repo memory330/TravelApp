@@ -1,86 +1,242 @@
 package com.wxmylife.betty.home;
 
-import agency.tango.materialintroscreen.MaterialIntroActivity;
-import agency.tango.materialintroscreen.MessageButtonBehaviour;
-import agency.tango.materialintroscreen.SlideFragmentBuilder;
-import agency.tango.materialintroscreen.animations.IViewTranslation;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.FloatRange;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.ImageView;
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.wxmylife.betty.base.modularization.module.home.HomeIntent;
+import com.nightonke.wowoviewpager.Animation.WoWoAlphaAnimation;
+import com.nightonke.wowoviewpager.Animation.WoWoElevationAnimation;
+import com.nightonke.wowoviewpager.Animation.WoWoPathAnimation;
+import com.nightonke.wowoviewpager.Animation.WoWoRotationAnimation;
+import com.nightonke.wowoviewpager.Animation.WoWoScaleAnimation;
+import com.nightonke.wowoviewpager.Animation.WoWoShapeColorAnimation;
+import com.nightonke.wowoviewpager.Animation.WoWoTextViewColorAnimation;
+import com.nightonke.wowoviewpager.Animation.WoWoTextViewTextAnimation;
+import com.nightonke.wowoviewpager.Animation.WoWoTranslationAnimation;
+import com.nightonke.wowoviewpager.Enum.Ease;
+import com.nightonke.wowoviewpager.WoWoPathView;
 import com.wxmylife.betty.base.modularization.provider.IHomeProvider;
+import com.wxmylife.betty.base.utils.DisplayUtil;
 
 /**
  * Created by wxmylife on 2017/4/25.
  */
 @Route(path = IHomeProvider.HOME_ACT_GUIDE)
-public class GuideActivity extends MaterialIntroActivity {
+public class GuideActivity extends BaseGuideActivity {
+
+
+    private int r;
+    private boolean animationAdded = false;
+    private ImageView targetPlanet;
+    private View loginLayout;
+
+
+    @Override protected int contentViewRes() {
+        return R.layout.activity_guide;
+    }
+
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        enableLastSlideAlphaExitTransition(true);
+        // getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+        // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        // HomeIntent.launchHome();
 
-        getBackButtonTranslationWrapper()
-            .setEnterTranslation(new IViewTranslation() {
-                @Override
-                public void translate(View view, @FloatRange(from = 0, to = 1.0) float percentage) {
-                    view.setAlpha(percentage);
-                }
-            });
+        r = (int)Math.sqrt(screenW * screenW + screenH * screenH) + 10;
 
-        addSlide(new SlideFragmentBuilder()
-                .backgroundColor(R.color.first_slide_background)
-                .buttonsColor(R.color.first_slide_buttons)
-                .image(R.drawable.img_office)
-                .title("Organize your time with us")
-                .description("Would you try?")
-                .build(),
-            new MessageButtonBehaviour(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showMessage("We provide solutions to make you love your work");
-                }
-            }, "Work with love"));
+        ImageView earth = (ImageView) findViewById(R.id.earth);
+        targetPlanet = (ImageView) findViewById(R.id.planet_target);
+        loginLayout = findViewById(R.id.login_layout);
 
-        addSlide(new SlideFragmentBuilder()
-            .backgroundColor(R.color.second_slide_background)
-            .buttonsColor(R.color.second_slide_buttons)
-            .title("Want more?")
-            .description("Go on")
-            .build());
+        earth.setY(screenH / 2);
+        targetPlanet.setY(-screenH / 2 - screenW / 2);
+        targetPlanet.setScaleX(0.25f);
+        targetPlanet.setScaleY(0.25f);
 
-        // addSlide(new CustomSlide());
-
-        // addSlide(new SlideFragmentBuilder()
-        //         .backgroundColor(R.color.third_slide_background)
-        //         .buttonsColor(R.color.third_slide_buttons)
-        //         .possiblePermissions(new String[]{ Manifest.permission.CALL_PHONE, Manifest.permission.READ_SMS})
-        //         .neededPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
-        //         .image(R.drawable.img_equipment)
-        //         .title("We provide best tools")
-        //         .description("ever")
-        //         .build(),
-        //     new MessageButtonBehaviour(new View.OnClickListener() {
-        //         @Override
-        //         public void onClick(View v) {
-        //             showMessage("Try us!");
-        //         }
-        //     }, "Tools"));
-
-        addSlide(new SlideFragmentBuilder()
-            .backgroundColor(R.color.fourth_slide_background)
-            .buttonsColor(R.color.fourth_slide_buttons)
-            .title("That's it")
-            .description("Would you join us?")
-            .build());
+        wowo.addTemporarilyInvisibleViews(0, earth, findViewById(R.id.cloud_blue), findViewById(R.id.cloud_red));
+        wowo.addTemporarilyInvisibleViews(0, targetPlanet);
+        wowo.addTemporarilyInvisibleViews(2, loginLayout, findViewById(R.id.button));
     }
+
 
     @Override
-    public void onFinish() {
-        super.onFinish();
-        // Toast.makeText(this, "Try this library in your project! :)", Toast.LENGTH_SHORT).show();
-        HomeIntent.launchHome();
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        addAnimations();
     }
+
+    private void addAnimations() {
+        if (animationAdded) return;
+        animationAdded = true;
+
+        addEarthAnimation();
+        addCloudAnimation();
+        addTextAnimation();
+        addRocketAnimation();
+        addCircleAnimation();
+        addMeteorAnimation();
+        addPlanetAnimation();
+        addPlanetTargetAnimation();
+        addLoginLayoutAnimation();
+        addButtonAnimation();
+        addEditTextAnimation();
+
+        wowo.ready();
+
+        // Do this the prevent the edit-text and button views on login layout
+        // to intercept the drag event.
+        wowo.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+                loginLayout.setEnabled(position == 3);
+                loginLayout.setVisibility(position + positionOffset <= 2 ? View.INVISIBLE : View.VISIBLE);
+            }
+        });
+    }
+
+    private void addEarthAnimation() {
+        View earth = findViewById(R.id.earth);
+        wowo.addAnimation(earth)
+            .add(WoWoRotationAnimation.builder().page(0).keepX(0).keepY(0).fromZ(0).toZ(180).ease(Ease.OutBack).build())
+            .add(WoWoRotationAnimation.builder().page(1).keepX(0).keepY(0).fromZ(180).toZ(720).ease(Ease.OutBack).build())
+            .add(WoWoRotationAnimation.builder().page(2).keepX(0).keepY(0).fromZ(720).toZ(1260).ease(Ease.OutBack).build())
+            .add(WoWoScaleAnimation.builder().page(1).fromXY(1).toXY(0.5).ease(Ease.OutBack).build())
+            .add(WoWoScaleAnimation.builder().page(2).fromXY(0.5).toXY(0.25).ease(Ease.OutBack).build());
+    }
+
+    private void addCloudAnimation() {
+        wowo.addAnimation(findViewById(R.id.cloud_blue))
+            .add(WoWoTranslationAnimation.builder().page(0).fromX(screenW).toX(0).keepY(0).ease(Ease.OutBack).sameEaseBack(false).build())
+            .add(WoWoTranslationAnimation.builder().page(1).fromX(0).toX(screenW).keepY(0).ease(Ease.InBack).sameEaseBack(false).build());
+
+        wowo.addAnimation(findViewById(R.id.cloud_red))
+            .add(WoWoTranslationAnimation.builder().page(0).fromX(-screenW).toX(0).keepY(0).ease(Ease.OutBack).sameEaseBack(false).build())
+            .add(WoWoTranslationAnimation.builder().page(1).fromX(0).toX(-screenW).keepY(0).ease(Ease.InBack).sameEaseBack(false).build());
+
+        wowo.addAnimation(findViewById(R.id.cloud_yellow))
+            .add(WoWoTranslationAnimation.builder().page(0).keepX(0).fromY(0).toY(DisplayUtil.dp2px(this,50)).ease(Ease.OutBack).sameEaseBack(false).build())
+            .add(WoWoTranslationAnimation.builder().page(1).fromX(0).toX(-screenW).keepY(DisplayUtil.dp2px(this,50)).ease(Ease.InBack).sameEaseBack(false).build());
+    }
+
+    private void addTextAnimation() {
+        View text = findViewById(R.id.text);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) text.setZ(50);
+        String[] texts = new String[]{
+            "HOME?",
+            "OR SKY?",
+            "OR UNIVERSE?",
+            "Let's Discover More!",
+        };
+        wowo.addAnimation(text)
+            .add(WoWoTextViewTextAnimation.builder().page(0).from(texts[0]).to(texts[1]).build())
+            .add(WoWoTextViewTextAnimation.builder().page(1).from(texts[1]).to(texts[2]).build())
+            .add(WoWoTextViewTextAnimation.builder().page(2).from(texts[2]).to(texts[3]).build())
+            .add(WoWoTextViewColorAnimation.builder().page(1).from("#05502f").to(Color.WHITE).build());
+    }
+
+    private void addRocketAnimation() {
+        WoWoPathView pathView = (WoWoPathView) findViewById(R.id.path_view);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) pathView.setZ(50);
+
+        // For different screen size, try to adjust the scale values to see the airplane.
+        float xScale = 1;
+        float yScale = 1;
+
+        pathView.newPath()
+            .pathMoveTo(xScale * (-100), screenH - 100)
+            .pathCubicTo(screenW / 2, screenH - 100,
+                screenW / 2, screenH - 100,
+                screenW / 2, yScale * (-100));
+        wowo.addAnimation(pathView)
+            .add(WoWoPathAnimation.builder().page(0).from(0).to(0.50).path(pathView).build())
+            .add(WoWoPathAnimation.builder().page(1).from(0.50).to(0.75).path(pathView).build())
+            .add(WoWoPathAnimation.builder().page(2).from(0.75).to(1).path(pathView).build())
+            .add(WoWoAlphaAnimation.builder().page(2).from(1).to(0).build());
+    }
+
+    private void addCircleAnimation() {
+        View circle = findViewById(R.id.circle);
+        wowo.addAnimation(circle)
+            .add(WoWoScaleAnimation.builder().page(1).fromXY(1).toXY(r * 2 / circle.getWidth()).build())
+            .add(WoWoShapeColorAnimation.builder().page(1).from("#f9dc0a").to("#05502f").build());
+    }
+
+    private void addMeteorAnimation() {
+        View meteor = findViewById(R.id.meteor);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) meteor.setZ(50);
+        float fullOffset = screenW + meteor.getWidth();
+        float offset = fullOffset / 2;
+        wowo.addAnimation(meteor)
+            .add(WoWoTranslationAnimation.builder().page(1)
+                .fromX(0).fromY(0)
+                .toX(offset).toY(offset).ease(Ease.OutBack).sameEaseBack(false).build())
+            .add(WoWoTranslationAnimation.builder().page(2)
+                .fromX(offset).fromY(offset)
+                .toX(fullOffset).toY(fullOffset).ease(Ease.InBack).sameEaseBack(false).build());
+    }
+
+    private void addPlanetAnimation() {
+        View planet0 = findViewById(R.id.planet_0);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) planet0.setZ(50);
+        wowo.addAnimation(planet0)
+            .add(WoWoTranslationAnimation.builder().page(1)
+                .keepX(0)
+                .fromY(0).toY(planet0.getHeight() + 200)
+                .ease(Ease.OutBack).sameEaseBack(false).build())
+            .add(WoWoTranslationAnimation.builder().page(2)
+                .fromX(0).toX(screenW)
+                .keepY(planet0.getHeight() + 200)
+                .ease(Ease.InBack).sameEaseBack(false).build());
+
+        View planet1 = findViewById(R.id.planet_1);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) planet1.setZ(50);
+        wowo.addAnimation(planet1)
+            .add(WoWoTranslationAnimation.builder().page(1)
+                .fromX(0).toX(-planet1.getWidth())
+                .keepY(0)
+                .ease(Ease.OutBack).sameEaseBack(false).build())
+            .add(WoWoTranslationAnimation.builder().page(2)
+                .fromX(-planet1.getWidth()).toX(-screenW - planet1.getWidth())
+                .keepY(0)
+                .ease(Ease.InBack).sameEaseBack(false).build());
+    }
+
+    private void addPlanetTargetAnimation() {
+        wowo.addAnimation(targetPlanet)
+            .add(WoWoRotationAnimation.builder().page(1).keepX(0).keepY(0).fromZ(0).toZ(180).ease(Ease.OutBack).build())
+            .add(WoWoRotationAnimation.builder().page(2).keepX(0).keepY(0).fromZ(180).toZ(360).ease(Ease.OutBack).build())
+            .add(WoWoTranslationAnimation.builder().page(0).keepX(0)
+                .fromY(-screenH / 2 - screenW / 2)
+                .toY(-screenH / 2).ease(Ease.OutBack).sameEaseBack(false).build())
+            .add(WoWoScaleAnimation.builder().page(1).fromXY(0.25).toXY(0.5).ease(Ease.OutBack).build())
+            .add(WoWoScaleAnimation.builder().page(2).fromXY(0.5).toXY(1).ease(Ease.OutBack).build());
+    }
+
+    private void addLoginLayoutAnimation() {
+        View layout = findViewById(R.id.login_layout);
+        wowo.addAnimation(layout)
+            .add(WoWoAlphaAnimation.builder().page(1).start(1).end(1).from(0).to(1).build())
+            .add(WoWoShapeColorAnimation.builder().page(2).from("#05502f").to("#0aa05f").build())
+            .add(WoWoElevationAnimation.builder().page(2).from(0).to(40).build());
+    }
+
+    private void addButtonAnimation() {
+        View button = findViewById(R.id.button);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) button.setZ(50);
+        wowo.addAnimation(button)
+            .add(WoWoAlphaAnimation.builder().page(2).from(0).to(1).build());
+    }
+
+    private void addEditTextAnimation() {
+        // wowo.addAnimation(findViewById(R.id.username))
+        //     .add(WoWoAlphaAnimation.builder().page(2).from(0).to(1).build());
+        // wowo.addAnimation(findViewById(R.id.password))
+        //     .add(WoWoAlphaAnimation.builder().page(2).from(0).to(1).build());
+    }
+
 }
