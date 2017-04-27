@@ -4,6 +4,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.wxmylife.betty.base.base.BaseApplication;
 import com.wxmylife.betty.base.modularization.config.ModuleOptions;
 import com.wxmylife.betty.base.modularization.provider.IHomeProvider;
+import com.wxmylife.betty.base.modularization.provider.IUserProvider;
 import com.wxmylife.betty.base.modularization.router.ModuleManager;
 
 /**
@@ -24,7 +25,8 @@ public class App extends BaseApplication {
             ARouter.printStackTrace();
         ARouter.init(this);
         ModuleOptions.ModuleBuilder builder=new ModuleOptions.ModuleBuilder(this)
-            .addModule(IHomeProvider.HOME_MAIN_SERVICE,IHomeProvider.HOME_MAIN_SERVICE);
+            .addModule(IHomeProvider.HOME_MAIN_SERVICE,IHomeProvider.HOME_MAIN_SERVICE)
+            .addModule(IUserProvider.USER_MAIN_SERVICE,IUserProvider.USER_MAIN_SERVICE);
 
         ModuleManager.getInstance().init(builder.build());
     }
