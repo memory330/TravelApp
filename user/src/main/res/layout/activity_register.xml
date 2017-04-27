@@ -18,6 +18,13 @@
         android:hint="@string/user_password"
         />
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        style="@style/User.Widget.EditText"
+        android:hint="@string/user_ok_password"
+        />
+
     <Button
         android:id="@+id/user_button_register"
         style="@style/User.Widget.Button"
