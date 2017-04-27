@@ -3,6 +3,7 @@ package com.wxmylife.betty.base.modularization.router;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.wxmylife.betty.base.modularization.provider.IHomeProvider;
+import com.wxmylife.betty.base.modularization.provider.IUserProvider;
 
 /**
  * Created by wxmylife on 2017/4/21.
@@ -13,6 +14,8 @@ public class ServiceManager {
     @Autowired
     IHomeProvider homeProvider;
 
+    @Autowired
+    IUserProvider userProvider;
     //可以不使用@Autowired，手动发现服务
     // IModule1Provider module1Provider;
     // IModule2Provider module2Provider;
@@ -38,7 +41,7 @@ public class ServiceManager {
     }
 
 
-
-
-
+    public IUserProvider getUserProvider() {
+        return userProvider;
+    }
 }

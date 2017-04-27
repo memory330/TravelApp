@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        style="@style/User.Widget.EditText"
+        android:hint="sdasda"/>
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        style="@style/User.Widget.EditText"
+        android:hint="sdasda"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:layout_height="50dip"
+            android:text="login in"/>
+        <Button
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:layout_height="50dip"
+            android:text="注册"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

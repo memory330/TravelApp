@@ -7,11 +7,14 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.wxmylife.betty.base.base.BaseActivity;
+import com.wxmylife.betty.base.modularization.module.user.UserIntent;
 import com.wxmylife.betty.base.modularization.provider.IHomeProvider;
 import com.wxmylife.betty.base.utils.ConstantUtil;
 import com.wxmylife.betty.base.utils.PreferenceUtil;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by wxmylife on 2017/4/25.
@@ -36,7 +39,7 @@ public class HomeActivity extends BaseActivity
         //初始化Fragment
         // initFragments();
         //初始化侧滑菜单
-        // initNavigationView();
+        initNavigationView();
     }
 
 
@@ -48,7 +51,13 @@ public class HomeActivity extends BaseActivity
 
     private void initNavigationView() {
         _NavigationView.setNavigationItemSelectedListener(this);
-
+        View headerView = _NavigationView.getHeaderView(0);
+        CircleImageView userAvatar= (CircleImageView) headerView.findViewById(R.id.user_avatar_view);
+        userAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                UserIntent.launchLogin();
+            }
+        });
     }
 
 
