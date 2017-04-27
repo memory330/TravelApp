@@ -50,7 +50,11 @@
             android:screenOrientation="portrait" />
         <!-- 登陆页面 -->
         <activity
-            android:name=".user.LoginActivity"
+        android:name=".user.LoginActivity"
+        android:screenOrientation="portrait" />
+        <!-- 注册页面 -->
+        <activity
+            android:name=".user.RegisterActivity"
             android:screenOrientation="portrait" />
     </application>
 

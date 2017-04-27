@@ -21,4 +21,8 @@ public class UserIntent {
     }
 
 
+    public static void launchRegister() {
+        ModuleRouter.newInstance(IUserProvider.USER_ACT_REGISTER)
+            .navigation();
+    }
 }

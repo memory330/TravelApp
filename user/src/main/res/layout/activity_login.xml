@@ -9,14 +9,14 @@
         android:layout_width="match_parent"
         android:layout_height="50dip"
         style="@style/User.Widget.EditText"
-        android:hint="sdasda"/>
+        android:hint="@string/user_username"/>
 
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="50dip"
         style="@style/User.Widget.EditText"
-        android:hint="sdasda"/>
+        android:hint="@string/user_password"/>
 
 
     <LinearLayout
@@ -25,15 +25,17 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/user_button_login"
             android:layout_width="0dip"
             android:layout_weight="1"
             android:layout_height="50dip"
-            android:text="login in"/>
+            android:text="@string/user_login"/>
         <Button
+            android:id="@+id/user_button_register"
             android:layout_width="0dip"
             android:layout_weight="1"
             android:layout_height="50dip"
-            android:text="注册"/>
+            android:text="@string/user_register"/>
 
     </LinearLayout>
 

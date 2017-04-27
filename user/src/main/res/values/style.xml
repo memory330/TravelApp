@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="User.Widget"
-        parent="android:Widget"/>
+    <style name="User.Widget" parent="android:Widget"/>
 
     <style name="User.Widget.EditText">
         <item name="android:layout_marginEnd">@dimen/normal_view_space</item>
         <item name="android:layout_marginStart">@dimen/normal_view_space</item>
         <item name="android:paddingBottom">18dp</item>
         <item name="android:textSize">14dp</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:textStyle">normal</item>
         <item name="android:textColor">@android:color/black</item>
     </style>
+
+    <style name="User.Widget.Button">
+        <!--<item name="android:Layout_width">@dimen/normal_button_width</item>-->
+        <!--<item name="android:height">@dimen/normal_button_height</item>-->
+        <item name="android:textSize">14dp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
 
 </resources>

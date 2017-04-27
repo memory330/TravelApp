@@ -1,27 +1,35 @@
 package com.wxmylife.betty.user;
 
-import android.os.Bundle;
+import android.view.View;
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.wxmylife.betty.base.base.BaseActivity;
+import com.wxmylife.betty.base.modularization.module.user.UserIntent;
 import com.wxmylife.betty.base.modularization.provider.IUserProvider;
+import com.wxmylife.betty.base.mvp.presenter.ActivityPresenter;
 
 /**
  * Created by wxmylife on 2017/4/27.
  */
 @Route(path = IUserProvider.USER_ACT_LOGIN)
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends ActivityPresenter<LoginDelegate> implements View.OnClickListener {
 
-    @Override public int getLayoutId() {
-        return R.layout.activity_login;
+
+    @Override public void onClick(View view) {
+        int viewId = view.getId();
+        if (viewId == R.id.user_button_login) {
+            viewDelegate.userToLogin();
+        }else if (viewId==R.id.user_button_register){
+            UserIntent.launchRegister();
+        }
     }
 
 
-    @Override public void initViews(Bundle savedInstanceState) {
-
+    @Override protected void bindEvenListener() {
+        super.bindEvenListener();
+        viewDelegate.setOnClickListener(this, R.id.user_button_login,R.id.user_button_register);
     }
 
 
-    @Override public void initToolBar() {
-
+    @Override protected Class<LoginDelegate> getDelegateClass() {
+        return LoginDelegate.class;
     }
 }

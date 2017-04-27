@@ -8,7 +8,8 @@ public interface IUserProvider extends IBaseProvider{
 
     //Service
     String USER_MAIN_SERVICE = "/user/main/service";
-    //开屏
+    //登陆
     String USER_ACT_LOGIN = "/user/act/login";
-
+    //组册
+    String USER_ACT_REGISTER= "/user/act/register";
 }
